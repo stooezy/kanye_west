@@ -37,7 +37,18 @@
 
 function counter(arr) {
     // Write your code here
+    const obj = {}
 
+    for (let i = 0; i < arr.length; i++) {
+        const key = arr[i]
+        if(obj[key] === undefined) {
+            obj[key] = 1
+        } else {
+            obj[key]++
+        }
+    }
+
+    return obj
 }
 
 console.log(counter(['Joyful', 'Infinite', 'Humble', 'Joyful', 'Glory', 'King', 'Humble', 'Infinite']))
