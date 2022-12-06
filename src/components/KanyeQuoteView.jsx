@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { addFavoriteQuote, fetchQuote } from "../stores/quoteSlice";
 
 export default function KanyeQuoteView() {
+  const quote = useSelector(state => state.quote.quote)
+  const favoriteQuotes = useSelector(state => state.quote.favoriteQuotes)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchQuote())
+  }, [])
+
+  const handleGetQuote = () => {
+    dispatch(fetchQuote())
+  }
+
+  const handleAddFavorite = () => {
+    dispatch(addFavoriteQuote(quote))
+  }
+  
 
   return (
     <section style={{ textAlign: "center" }}>
@@ -11,8 +29,18 @@ export default function KanyeQuoteView() {
       />
       <h1 style={{ fontSize: "40px", marginTop: "10px" }}>Kanye-West Quote</h1>
 
-      <button >Get Quote</button>
-      <button >Add Favorite</button>
+      <h2 style={{marginTop: '1rem'}}>{quote}</h2>
+
+      <button onClick={handleGetQuote}>Get Quote</button>
+      <button onClick={handleAddFavorite}>Add Favorite</button>
+
+      <div>
+        {
+          favoriteQuotes.map((fQuote) => (
+            <p key={fQuote}>{fQuote}</p>
+          ))
+        }
+      </div>
     </section>
   );
 }
