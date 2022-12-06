@@ -24,6 +24,24 @@ OUTPUT:
 
 function jumlahTabungan(listHarga, history) {
     // Write your code here
+    const mapPrices = listHarga.reduce((map, obj) => map.set(obj.nama, obj.harga), new Map())
+    const deposit = 10000
+    let saving = 0
+
+    const dailyDetail = history.split('.').reduce((a, v) => {
+      const parsed = v.split('-')
+      const day = parsed[0]
+      const menus = parsed[1].split(',')
+      const spending = menus.reduce((menuA, menuV) => {
+        return menuA + mapPrices.get(menuV)
+      }, 0)
+      const moneyLeft = deposit - spending
+      saving += moneyLeft
+
+      return {...a, [day]: moneyLeft}
+    }, {})
+
+    return {...dailyDetail, TotalTabungan: saving}
 }
 
 var hargaMakanan = [
